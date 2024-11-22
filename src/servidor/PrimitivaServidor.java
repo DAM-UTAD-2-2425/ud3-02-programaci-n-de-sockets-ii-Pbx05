@@ -8,9 +8,15 @@ public class PrimitivaServidor {
 		String respuesta;
 		do {
 			linea = canal.leerCombinacion();
-			respuesta = canal.comprobarBoleto ();
-			canal.enviarRespuesta (respuesta);
-		} while (!linea.equals("FIN"));
+			// Creo un if para que no pete el programa al decir que no quieres volver a jugar, porque si dices que no al recibir un null en linea
+			// explotara el metodo de comprobar boleto, si recibe null igualo el valor de linea a fin para que acabe el servidor 
+			if(linea != null) {
+				respuesta = canal.comprobarBoleto (linea);
+				canal.enviarRespuesta (respuesta);
+			}else {
+				linea = "FIN";
+			}
+		} while (!linea.equalsIgnoreCase("FIN"));
 		canal.finSesion();
 		
 	}
